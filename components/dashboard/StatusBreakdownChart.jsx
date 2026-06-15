@@ -26,8 +26,8 @@ const FALLBACK_COLORS = [
 
 function resolveStatusChartColor(name, dbColor, index) {
   const key = name?.toLowerCase?.() ?? "";
-  if (key === "paid") return "#22c55e";
-  if (key === "pending") return BRAND_COLORS.red;
+  if (key === "paid") return "#1F402C";
+  if (key === "pending") return "#982D2D";
   return dbColor || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
 }
 

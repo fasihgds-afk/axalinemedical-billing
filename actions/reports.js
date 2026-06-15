@@ -5,6 +5,8 @@ import { auth } from "@/lib/auth";
 import { isAuthWithoutDb } from "@/lib/devAuth";
 import { getDevReportsData } from "@/lib/devPaymentStore";
 import { buildCsv } from "@/lib/csv";
+import { buildReportPdf } from "@/lib/reportPdf";
+import { getBusinessProfile } from "@/actions/businessProfile";
 import Payment from "@/models/Payment";
 import PaymentStatus from "@/models/PaymentStatus";
 import PaymentMethod from "@/models/PaymentMethod";
@@ -297,4 +299,36 @@ export async function exportReportsCsv(filtersInput = {}) {
     data: buildReportCsvContent(result.data),
     error: null,
   };
+}
+
+export async function exportReportsPdf(filtersInput = {}) {
+  const result = await getReportsData(filtersInput);
+
+  if (!result.success) {
+    return { success: false, data: null, error: result.error };
+  }
+
+  try {
+    const profileResult = await getBusinessProfile();
+    const businessProfile = profileResult.success
+      ? profileResult.data.profile
+      : null;
+
+    const pdfBuffer = await buildReportPdf({
+      reportData: result.data,
+      businessProfile,
+    });
+
+    return {
+      success: true,
+      data: pdfBuffer.toString("base64"),
+      error: null,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
+      error: error.message || "Failed to generate PDF report",
+    };
+  }
 }

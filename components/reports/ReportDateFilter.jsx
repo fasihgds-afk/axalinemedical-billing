@@ -42,9 +42,11 @@ export function ReportDateFilter({ defaults = {} }) {
         "flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end"
       )}
     >
-      <div className="flex items-center gap-2 text-sm font-medium sm:w-full">
-        <Calendar className="h-4 w-4 text-primary" />
-        Date range
+      <div className="flex items-center gap-2 text-sm font-semibold text-primary sm:w-full">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-[#155a9e] text-white shadow-sm">
+          <Calendar className="h-4 w-4" />
+        </span>
+        Filter by date range
       </div>
       <div className="space-y-2 sm:min-w-[160px]">
         <label className="text-sm font-medium">From</label>
@@ -67,7 +69,7 @@ export function ReportDateFilter({ defaults = {} }) {
         />
       </div>
       <div className="flex gap-2">
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" disabled={isPending} className="bg-gradient-to-r from-primary to-[#2d7fc2] shadow-sm">
           Apply
         </Button>
         {hasFilters ? (

@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { REPORT_BRAND } from "@/lib/reportBrand";
 import { BRAND_COLORS } from "@/config/constants";
 import { formatCurrency } from "@/lib/formatCurrency";
 import {
@@ -26,8 +27,8 @@ const FALLBACK_COLORS = [
 
 function resolveStatusChartColor(name, dbColor, index) {
   const key = name?.toLowerCase?.() ?? "";
-  if (key === "paid") return "#41A541";
-  if (key === "pending") return "#F53333";
+  if (key === "paid") return REPORT_BRAND.paid;
+  if (key === "pending") return REPORT_BRAND.pending;
   return dbColor || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
 }
 

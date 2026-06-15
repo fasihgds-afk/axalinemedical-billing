@@ -24,6 +24,13 @@ const FALLBACK_COLORS = [
   "#6366F1",
 ];
 
+function resolveStatusChartColor(name, dbColor, index) {
+  const key = name?.toLowerCase?.() ?? "";
+  if (key === "paid") return "#22c55e";
+  if (key === "pending") return BRAND_COLORS.red;
+  return dbColor || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
+}
+
 function ChartTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
 
@@ -46,7 +53,7 @@ export function StatusBreakdownChart({ data = [] }) {
     value: item.total,
     total: item.total,
     count: item.count,
-    color: item.color || FALLBACK_COLORS[index % FALLBACK_COLORS.length],
+    color: resolveStatusChartColor(item.name, item.color, index),
   }));
 
   return (
